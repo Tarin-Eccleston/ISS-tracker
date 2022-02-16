@@ -30,14 +30,21 @@ print(satellite)
 # if abs(days) > 7:
 #     print("TLE epoch is too far in the past/future")
 
+freq = 50
+
 while True:
     t = ts.now()
 
     geocentric = satellite.at(t)
+    # v = satellite.at(t).velocity()
+    
     lat, lon = wgs84.latlon_of(geocentric)
-    print(lat)
-    print(lon)
+    lat = lat.degrees
+    lon = lon.degrees
+    
+    alt = wgs84.height_of(geocentric)
+    alt = alt.km
 
-    time.sleep(0.02)
+    time.sleep(1/freq)
 
 

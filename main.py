@@ -30,7 +30,11 @@ print(satellite)
 # if abs(days) > 7:
 #     print("TLE epoch is too far in the past/future")
 
-freq = 50
+dt = 0.02
+# R = 6371
+# lat_prev = 0.0
+# lon_prev = 0.0
+# count = 0
 
 while True:
     t = ts.now()
@@ -38,13 +42,33 @@ while True:
     geocentric = satellite.at(t)
     # v = satellite.at(t).velocity()
     
-    lat, lon = wgs84.latlon_of(geocentric)
-    lat = lat.degrees
-    lon = lon.degrees
+    lat_current, lon_current = wgs84.latlon_of(geocentric)
+    lat_current = lat_current.radians
+    lon_current = lon_current.radians
     
     alt = wgs84.height_of(geocentric)
     alt = alt.km
+    
+    # if (~(lat_prev == 0.0) & ~(lon_prev == 0.0) & (count % 1000 == 0)):
+    #     # use Haversine formala to find ISS velocity
+    #     dlong = lon_current - lon_prev;
+    #     dlat = lat_current - lat_prev;
+        
+    #     dtheta = 2 * math.asin(math.sqrt(pow(math.sin(dlat / 2), 2) + math.cos(lat_prev) * 
+    #         math.cos(lat_current) * pow(math.sin(dlong / 2), 2)))
+    #     ds = R * dtheta
+        
+    #     # differentiate to find velocity
+    #     v = ds/(dt * 1000)
+    #     v = round(v,4)
+    #     print("Velocity (km/s): " + str(v))
 
-    time.sleep(1/freq)
+
+    # if (count % 1000 == 0): 
+    #     lat_prev = lat_current
+    #     lon_prev = lon_current
+    
+    # count = count + 1
+    time.sleep(dt)
 
 

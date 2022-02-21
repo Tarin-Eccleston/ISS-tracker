@@ -18,7 +18,7 @@ line2 = output[2]
 ts = skyfield.api.load.timescale()
 satellite = EarthSatellite(line1, line2, name, ts)
 
-dt = 0.02
+dt = 0.015
 
 while True:
     t = ts.now()
